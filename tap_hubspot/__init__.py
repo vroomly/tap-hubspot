@@ -145,28 +145,17 @@ def get_field_type_schema(field_type):
     else:
         return {"type": ["null", "string"]}
 
-def get_field_schema(field_type, extras=False):
-    if extras:
-        return {
-            "type": "object",
-            "properties": {
-                "value": get_field_type_schema(field_type),
-                "timestamp": get_field_type_schema("datetime"),
-                "source": get_field_type_schema("string"),
-                "sourceId": get_field_type_schema("string"),
-            }
+def get_field_schema(field_type):
+    return {
+        "type": "object",
+        "properties": {
+            "value": get_field_type_schema(field_type),
         }
-    else:
-        return {
-            "type": "object",
-            "properties": {
-                "value": get_field_type_schema(field_type),
-            }
-        }
+    }
 
 def parse_custom_schema(entity_name, data):
     return {
-        field['name']: get_field_schema(field['type'], entity_name != 'contacts')
+        field['name']: get_field_schema(field['type'])
         for field in data
     }
 
