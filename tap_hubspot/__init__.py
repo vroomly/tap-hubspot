@@ -98,7 +98,8 @@ ENDPOINTS = {
 }
 
 def get_start(state, tap_stream_id, bookmark_key):
-    current_bookmark = singer.get_bookmark(state, tap_stream_id, bookmark_key)
+    # more hack for hubspot sync
+    current_bookmark = singer.get_bookmark(state, 'hubspot_' + tap_stream_id, bookmark_key)
     if current_bookmark is None:
         return CONFIG['start_date']
     return current_bookmark
